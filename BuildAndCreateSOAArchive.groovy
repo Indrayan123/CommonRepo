@@ -1,5 +1,9 @@
 #!groovy
 node(env.label){
+
+	stage('Clean Directory') {
+         sh ("rm -rf env.Subdirectory")
+    } 
     stage('GIT Source Code Download') {
          git env.GitURL
     }       
