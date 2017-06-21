@@ -1,9 +1,6 @@
 #!groovy
 node(env.label){
-
-	stage('Clean Directory') {
-         sh ("rm -rf *")
-    } 
+	
     stage('GIT Source Code Download') {
          git env.GitURL
     }       
@@ -16,15 +13,22 @@ node(env.label){
 	}
 	}
 	stage('Stashing Build Folder'){
-	    echo "Current Dir: ${pwd()}"
-	    stash includes: 'Builds/**', name: 'BuildResources'
+        dir (path: env.StashFolderName)	{
+	    stash includes: '**', name: 'BuildResources'
+		}
 	}
 	
 }
 node('master'){
     stage('UnStashing Build Folder') {
         dir(path: env.MasterBuildLocation){
-unstash 'BuildResources'
+		unstash 'BuildResources'
     }
 }
 }
+node(env.label){
+stage('Clean Directory') {
+		 echo "Cleaning Directory: ${pwd()}"
+         sh ("rm -rf *")
+    }
+}	
