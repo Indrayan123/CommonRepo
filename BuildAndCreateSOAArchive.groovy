@@ -2,7 +2,7 @@
 node(env.label){
 
 	stage('Clean Directory') {
-         sh ("rm -rf env.Subdirectory")
+         sh ("rm -rf *")
     } 
     stage('GIT Source Code Download') {
          git env.GitURL
