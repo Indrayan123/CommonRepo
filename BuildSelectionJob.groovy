@@ -1,9 +1,10 @@
 import java.io.File 
 node('master')
 {
+	def RevisionMethods = ""
     dir(path: env.MasterProjectLocation)
 	{
-        def RevisionMethods = load("ScheduleRevision.groovy")
+         RevisionMethods = load("ScheduleRevision.groovy")
 	}
         
     def file12=env.MasterDeploymentDetailsLocation+File.separator+"Revision.txt"
