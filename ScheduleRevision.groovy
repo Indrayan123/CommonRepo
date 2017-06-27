@@ -1,5 +1,5 @@
 #!groovy
-
+@NonCPS
 def parseFile(String fName,String env,String buildTag) 
 {
     ArrayList pids = null
@@ -58,7 +58,7 @@ else{
 	}
 	return "file generated"
 }
-
+@NonCPS
 def readFile(String fName,String env) 
 {
     ArrayList pids = null
