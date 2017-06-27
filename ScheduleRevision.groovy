@@ -1,6 +1,6 @@
 #!groovy
 @NonCPS
-def parseFile(String fName,String env,String buildTag) 
+def parseFile(String fName,String env,String buildTag,String Status) 
 {
     ArrayList pids = null
     PrintWriter writer = null
@@ -22,7 +22,7 @@ def parseFile(String fName,String env,String buildTag)
 				echo "inside remove"
 			}
 		}
-		pids.add(0,"${env}"+","+"${buildTag}"+","+"P")
+		pids.add(0,"${env}"+","+"${buildTag}"+","+"${Status}")
       		println pids
 		writer = new PrintWriter(f)
 		finali = pids.iterator()
@@ -51,7 +51,7 @@ else{
     boolean bool = f.createNewFile();
      f.setExecutable(true, false);
     pids = new ArrayList()
-    pids.add(0,"${env}"+","+"${buildTag}"+","+"P")
+	pids.add(0,"${env}"+","+"${buildTag}"+","+"${Status}")
     writer = new PrintWriter(f)
     pids.each 	{ id -> writer.println(id) }
     writer.close()
