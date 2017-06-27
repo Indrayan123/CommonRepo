@@ -58,4 +58,30 @@ else{
 	}
 	return "file generated"
 }
+
+def readFile(String fName,String env) 
+{
+    ArrayList pids = null
+    PrintWriter writer = null
+    File f=new File("${fName}")
+//	echo "${env}"
+//	echo "${fName}"
+	if (f.length() > 0)
+	{
+		pids = new ArrayList()
+		f.eachLine {  line ->pids.add(line) }
+		i = pids.iterator()
+		while (i.hasNext()) 
+		{
+		    def val=i.next().toUpperCase()
+		    //	echo "${val}"
+			if (val.contains("${env}")) 
+			{return val}
+		}
+	}
+else{
+   println "File is empty!"
+	return "File is empty!"
+	}
+}
 return this
