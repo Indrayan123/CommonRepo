@@ -57,7 +57,8 @@ node(env.label)
 	def deployscript = env.WARDeployscript
 	def buildworkspace = pwd()+'/'+stashbuildfolder
 //	echo soat3url:+"${soat3url}"
-	sh script: 'java -classpath "/opt/oracle/middleware/wlserver/server/lib/weblogic.jar:/opt/oracle/middleware/wlserver/modules/features/wlst.wls.classpath.jar" weblogic.WLST'+' '+deployscript+' '+soauser+' '+soapass+' '+soat3url+' '+buildworkspace , returnStatus: true
+	def scriptOp =(sh script: 'java -classpath "/opt/oracle/middleware/wlserver/server/lib/weblogic.jar:/opt/oracle/middleware/wlserver/modules/features/wlst.wls.classpath.jar" weblogic.WLST'+' '+deployscript+' '+soauser+' '+soapass+' '+soat3url+' '+buildworkspace , returnStatus: true)
+		echo "${scriptOp}"	
     }  
 	
 
