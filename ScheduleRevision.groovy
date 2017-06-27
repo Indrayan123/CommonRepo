@@ -37,6 +37,6 @@ else{
     pids.each 	{ id -> writer.println(id) }
     writer.close()
 	}
-	
+	return "file generated"
 }
-return "File Has been generated"
+return this
