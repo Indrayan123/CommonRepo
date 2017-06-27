@@ -2,7 +2,7 @@ import java.io.File
 node('master')
 {
     
-        def RevisionMethods = load("ScheduleRevision.groovy")
+        def RevisionMethods = load("../BuildSelectionJob/ScheduleRevision.groovy")
         
     def file12=env.MasterDeploymentDetailsLocation+File.separator+"Revision.txt"
      echo "${file12}"
