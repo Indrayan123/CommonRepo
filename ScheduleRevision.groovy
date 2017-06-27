@@ -30,10 +30,14 @@ def parseFile(String fName,String env,String buildTag)
 			id -> writer.println(id) 
 			println id
 		}*/
-		while (finali.hasNext())
+		/*while (finali.hasNext())
 		{
 		writer.println(finali.next())
 		println finali.next()	
+		}*/
+		for (String item : pids)
+		{
+			println item
 		}
 		writer.close()
 	}
