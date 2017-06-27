@@ -25,9 +25,15 @@ def parseFile(String fName,String env,String buildTag)
 		pids.add(0,"${env}"+","+"${buildTag}"+","+"P")
       		println pids
 		writer = new PrintWriter(f)
-		pids.each 	{
+		finali = pids.iterator()
+		/*pids.each 	{
 			id -> writer.println(id) 
 			println id
+		}*/
+		while (finali.hasNext())
+		{
+		writer.println(finali.next())
+		println finali.next()	
 		}
 		writer.close()
 	}
