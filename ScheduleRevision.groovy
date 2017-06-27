@@ -1,5 +1,5 @@
 #!groovy
-@NonCPS
+
 def parseFile(String fName,String env,String buildTag) 
 {
     ArrayList pids = null
