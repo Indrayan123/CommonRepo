@@ -10,13 +10,17 @@ def parseFile(String fName,String env,String buildTag)
 	echo "${buildTag}"
 	if (f.length() > 0)
 	{
+		echo "inside if"
 		pids = new ArrayList()
 		f.eachLine {  line ->pids.add(line) }
 		i = pids.iterator()
 		while (i.hasNext()) 
 		{
 			if (i.next().toUpperCase().contains("${env}")) 
-			{i.remove()}
+			{
+				i.remove()
+				echo "inside remove"
+			}
 		}
 		pids.add(0,"${env}"+","+"${buildTag}"+","+"P")
       	println pids
@@ -25,6 +29,7 @@ def parseFile(String fName,String env,String buildTag)
 		writer.close()
 	}
 else{
+	echo "inside else"
    println "File is empty!"
    boolean dirCreated = f.getParentFile().mkdirs();
    echo "${dirCreated}"
