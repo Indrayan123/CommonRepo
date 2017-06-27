@@ -38,6 +38,7 @@ def parseFile(String fName,String env,String buildTag)
 		for (String item : pids)
 		{
 			println item
+			writer.println(item)
 		}
 		writer.close()
 	}
