@@ -11,10 +11,10 @@ node('master')
 		{
 		echo 'File Does not Exists'
 		}
-		 dir(path: env.MasterProjectLocation)
-	   {
- RevisionMethods = load("ScheduleRevision.groovy")
-	   }
+ dir(path: env.MasterProjectLocation)
+	 {
+ 		RevisionMethods = load("ScheduleRevision.groovy")
+	 }
 def buildname =	RevisionMethods.readFile("${file12}","${EnvConfig}")
 echo "${buildname}"
 def intrmBuildFolder="${buildname}".substring(0,"${buildname}".lastIndexOf(","))
