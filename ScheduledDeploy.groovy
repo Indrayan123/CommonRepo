@@ -13,9 +13,9 @@ node('master')
 		}
  dir(path: env.MasterProjectLocation)
 	 {
- 		RevisionMethods = load("ScheduleRevision.groovy")
+ 		RevisionMethods = load("ProcessRevisionFile.groovy")
 	 }
-def buildname =	RevisionMethods.readFile("${file12}","${EnvConfig}")
+def buildname =	RevisionMethods.readRevisionFile("${file12}","${EnvConfig}")
 echo "${buildname}"
 def intrmBuildFolder="${buildname}".substring(0,"${buildname}".lastIndexOf(","))
 def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)
@@ -72,13 +72,13 @@ node('master')
 		 def RevisionMethods = ""
 	   dir(path: env.MasterProjectLocation)
 	   {
-         RevisionMethods = load("ScheduleRevision.groovy")
+         RevisionMethods = load("ProcessRevisionFile.groovy")
 	   }
 	    def buildname =	RevisionMethods.readFile("${file12}","${EnvConfig}")
         echo "${buildname}"
         def intrmBuildFolder="${buildname}".substring(0,"${buildname}".lastIndexOf(","))
         def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)
 	   
-	    RevisionMethods.parseFile(file12,EnvConfig,BuildFolder,"C")
+	    RevisionMethods.parseRevisionFile(file12,EnvConfig,BuildFolder,"C")
 	}
 }
