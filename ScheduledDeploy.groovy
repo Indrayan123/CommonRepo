@@ -63,7 +63,7 @@ node(env.label)
 		
 		if("${scriptOp}" !=0)
 		{
-			error "Deployment Failed Please Check Logs..."
+			
 			node('master')
 {
     	stage("Mark Failure of Deployment")
@@ -82,6 +82,7 @@ node(env.label)
 	    RevisionMethods.parseRevisionFile(file12,EnvConfig,BuildFolder,"F")
 	}
 }
+			error "Deployment Failed Please Check Logs..."
 		}
     }  
 	
