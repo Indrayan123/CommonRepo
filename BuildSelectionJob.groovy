@@ -4,7 +4,7 @@ node('master')
 	def RevisionMethods = ""
     dir(path: env.MasterProjectLocation)
 	{
-         RevisionMethods = load("ScheduleRevision.groovy")
+         RevisionMethods = load("ProcessRevisionFile.groovy")
 	}
         
     def file12=env.MasterDeploymentDetailsLocation+File.separator+"Revision.txt"
@@ -17,5 +17,5 @@ node('master')
 		echo 'File Does not Exists'
 		}
 		
-	RevisionMethods.parseFile(file12,EnvConfig,BuildFolder,"P")    
+	RevisionMethods.parseRevisionFile(file12,EnvConfig,BuildFolder,"P")    
 }
