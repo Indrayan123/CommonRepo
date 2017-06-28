@@ -64,6 +64,24 @@ node(env.label)
 		if("${scriptOp}" !=0)
 		{
 			error "Deployment Failed Please Check Logs..."
+			node('master')
+{
+    	stage("Mark Failure of Deployment")
+	{
+	    def file12=env.MasterRevLocation+File.separator+"Revision.txt"
+		 def RevisionMethods = ""
+	   dir(path: env.MasterProjectLocation)
+	   {
+         RevisionMethods = load("ProcessRevisionFile.groovy")
+	   }
+	    def buildname =	RevisionMethods.readRevisionFile("${file12}","${EnvConfig}")
+        echo "${buildname}"
+        def intrmBuildFolder="${buildname}".substring(0,"${buildname}".lastIndexOf(","))
+        def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)
+	   
+	    RevisionMethods.parseRevisionFile(file12,EnvConfig,BuildFolder,"F")
+	}
+}
 		}
     }  
 	
