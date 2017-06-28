@@ -87,6 +87,7 @@ def readRevisionFile(String fName,String env)
     File f=new File("${fName}")   						                  // Instantiate Application specific Revision file
 //	println "${env}"
 //	println "${fName}"
+	def j=0
 	if (f.length() > 0)
 	{
 		fileContent = new ArrayList()					                  // Initialize Array list
@@ -94,7 +95,7 @@ def readRevisionFile(String fName,String env)
 		i = fileContent.iterator()						                  // Initialize iterator for updated Array list
 		while (i.hasNext()) 						                      // Iterate through ArrayList
 		{
-		    def j=0
+		    
 			def lineContent=i.next().toUpperCase()			              // Define variable lineContent to read each line
 		    //	println "${lineContent}"			                      
 			if (lineContent.contains("${env}")) 			              // Check if env (passed as argument) specific entry exist or not in File
@@ -102,11 +103,11 @@ def readRevisionFile(String fName,String env)
 			 return lineContent}			                     		  // In case entry found, return the file line content
 		}
 		if(j==0)
-		return "No entry found corresponding to env: ${env}" 		      // In case entry not found 
+		return "Error:No entry found corresponding to env: ${env}" 		      // In case entry not found 
 	}
 	else{
 		println "File does not exists"
-		return "File does not exists" 								      // In case no entry found, return accordingly
+		return "Error:File does not exists" 								      // In case no entry found, return accordingly
 	}
 }
 return this
