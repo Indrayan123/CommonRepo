@@ -74,7 +74,7 @@ node('master')
 	   {
          RevisionMethods = load("ProcessRevisionFile.groovy")
 	   }
-	    def buildname =	RevisionMethods.readFile("${file12}","${EnvConfig}")
+	    def buildname =	RevisionMethods.readRevisionFile("${file12}","${EnvConfig}")
         echo "${buildname}"
         def intrmBuildFolder="${buildname}".substring(0,"${buildname}".lastIndexOf(","))
         def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)
