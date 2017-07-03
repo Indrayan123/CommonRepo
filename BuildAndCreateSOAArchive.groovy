@@ -26,9 +26,9 @@ node('master'){
     }
 }
 }
-/*node(env.label){
+node(env.label){
 stage('Clean Directory') {
 		 echo "Cleaning Directory: ${pwd()}"
          sh ("rm -rf *")
-    }*/
+    }
 }	
