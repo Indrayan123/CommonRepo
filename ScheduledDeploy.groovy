@@ -1,21 +1,14 @@
 import java.io.File 
 node('master')
 {
-    def file12=env.MasterRevLocation+File.separator+"Revision.txt"
+    def RevisionFile=env.MasterRevLocation+File.separator+"Revision.txt"
 	def RevisionMethods = ""
-    // echo "${file12}"
-    if (fileExists("${file12}")) 
-		{
-		echo 'File Exists'
-		} else
-		{
-		echo 'File Does not Exists'
-		}
+   
  dir(path: env.MasterProjectLocation)
 	 {
  		RevisionMethods = load("ProcessRevisionFile.groovy")
 	 }
-def buildname =	RevisionMethods.readRevisionFile("${file12}","${EnvConfig}")
+def buildname =	RevisionMethods.readRevisionFile("${RevisionFile}","${EnvConfig}")
 echo "${buildname}"
 def intrmBuildFolder="${buildname}".substring(0,"${buildname}".lastIndexOf(","))
 def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)
@@ -68,18 +61,18 @@ node(env.label)
 {
     	stage("Mark Failure of Deployment")
 	{
-	    def file12=env.MasterRevLocation+File.separator+"Revision.txt"
+	    def RevisionFile=env.MasterRevLocation+File.separator+"Revision.txt"
 		 def RevisionMethods = ""
 	   dir(path: env.MasterProjectLocation)
 	   {
          RevisionMethods = load("ProcessRevisionFile.groovy")
 	   }
-	    def buildname =	RevisionMethods.readRevisionFile("${file12}","${EnvConfig}")
+	    def buildname =	RevisionMethods.readRevisionFile("${RevisionFile}","${EnvConfig}")
         echo "${buildname}"
         def intrmBuildFolder="${buildname}".substring(0,"${buildname}".lastIndexOf(","))
         def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)
 	   
-	    RevisionMethods.parseRevisionFile(file12,EnvConfig,BuildFolder,"F")
+	    RevisionMethods.parseRevisionFile(RevisionFile,EnvConfig,BuildFolder,"F")
 	}
 }
 			error "Deployment Failed Please Check Logs..."
@@ -93,17 +86,17 @@ node('master')
 {
     	stage("Mark Completion of Deployment")
 	{
-	    def file12=env.MasterRevLocation+File.separator+"Revision.txt"
+	    def RevisionFile=env.MasterRevLocation+File.separator+"Revision.txt"
 		 def RevisionMethods = ""
 	   dir(path: env.MasterProjectLocation)
 	   {
          RevisionMethods = load("ProcessRevisionFile.groovy")
 	   }
-	    def buildname =	RevisionMethods.readRevisionFile("${file12}","${EnvConfig}")
+	    def buildname =RevisionMethods.readRevisionFile("${RevisionFile}","${EnvConfig}")
         echo "${buildname}"
         def intrmBuildFolder="${buildname}".substring(0,"${buildname}".lastIndexOf(","))
         def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)
 	   
-	    RevisionMethods.parseRevisionFile(file12,EnvConfig,BuildFolder,"C")
+	    RevisionMethods.parseRevisionFile(RevisionFile,EnvConfig,BuildFolder,"C")
 	}
 }
