@@ -52,9 +52,9 @@ node(env.label)
 //	echo soat3url:+"${soat3url}"
 		
 	def scriptOp =sh (script: 'java -classpath "/opt/oracle/middleware/wlserver/server/lib/weblogic.jar:/opt/oracle/middleware/wlserver/modules/features/wlst.wls.classpath.jar" weblogic.WLST'+' '+deployscript+' '+soauser+' '+soapass+' '+soat3url+' '+buildworkspace , returnStatus: true)
-		echo "${scriptOp}"
+		echo scriptOp:+"${scriptOp}"
 		
-		if("${scriptOp}" !=0)
+		if(${scriptOp} !=0)
 		{
 			
 			node('master')
