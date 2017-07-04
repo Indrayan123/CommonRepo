@@ -96,10 +96,12 @@ node('master')
 	   {
          RevisionMethods = load("ProcessRevisionFile.groovy")
 	   }
-	    def buildname =RevisionMethods.readRevisionFile("${RevisionFile}","${EnvConfig}")
+	  /*  def buildname =RevisionMethods.readRevisionFile("${RevisionFile}","${EnvConfig}")
         echo "${buildname}"
         def intrmBuildFolder="${buildname}".substring(0,"${buildname}".lastIndexOf(","))
-        def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)
+        def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)*/
+		
+		def  BuildFolder=env.EnvBuildFolder
 	   
 	    RevisionMethods.parseRevisionFile(RevisionFile,EnvConfig,BuildFolder,"C")
 	}
