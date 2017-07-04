@@ -49,7 +49,7 @@ node(env.label)
     def soauser = env."${soauserprop}"
 	def deployscript = env.WARDeployscript
 	def buildworkspace = pwd()+'/'+stashbuildfolder
-//	echo soat3url:+"${soat3url}"
+
 		
 	def scriptOp =sh (script: 'java -classpath "/opt/oracle/middleware/wlserver/server/lib/weblogic.jar:/opt/oracle/middleware/wlserver/modules/features/wlst.wls.classpath.jar" weblogic.WLST'+' '+deployscript+' '+soauser+' '+soapass+' '+soat3url+' '+buildworkspace , returnStatus: true)
 		
@@ -69,10 +69,7 @@ node(env.label)
 	   {
          RevisionMethods = load("ProcessRevisionFile.groovy")
 	   }
-	  /*  def buildname =	RevisionMethods.readRevisionFile("${RevisionFile}","${EnvConfig}")
-        echo "${buildname}"
-        def intrmBuildFolder="${buildname}".substring(0,"${buildname}".lastIndexOf(","))
-        def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)*/
+	 
 		
 	def  BuildFolder=env.EnvBuildFolder
 	   
@@ -96,11 +93,7 @@ node('master')
 	   {
          RevisionMethods = load("ProcessRevisionFile.groovy")
 	   }
-	  /*  def buildname =RevisionMethods.readRevisionFile("${RevisionFile}","${EnvConfig}")
-        echo "${buildname}"
-        def intrmBuildFolder="${buildname}".substring(0,"${buildname}".lastIndexOf(","))
-        def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)*/
-		
+	
 		def  BuildFolder=env.EnvBuildFolder
 	   
 	    RevisionMethods.parseRevisionFile(RevisionFile,EnvConfig,BuildFolder,"C")
