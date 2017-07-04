@@ -56,7 +56,7 @@ node(env.label)
 		
 		echo "scriptOp:${scriptOp}"
 		
-		/*if("${scriptOp}"!= "0")
+		if(scriptOp!= 0)
 		{
 			
 			node('master')
@@ -78,7 +78,7 @@ node(env.label)
 	}
 }
 			error "Deployment Failed Please Check Logs..."
-		}*/
+		}
     }  
 	
 
