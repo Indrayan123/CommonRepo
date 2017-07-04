@@ -15,7 +15,7 @@ def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndex
 echo "${BuildFolder}"
     def stashbuildpath = env.MasterBuildLocation +'\\'+ "${BuildFolder}"
     echo "${stashbuildpath}"
-    env.BuildFolder1="${BuildFolder}"
+    env.EnvBuildFolder="${BuildFolder}"
     stage('Stashing Build Folder')
     {
         dir (path: "${stashbuildpath}")	
@@ -26,7 +26,7 @@ echo "${BuildFolder}"
 }
 node(env.label)
 {
- def stashbuildfolder = env.StashFolderName+'/'+env.BuildFolder1
+ def stashbuildfolder = env.StashFolderName+'/'+env.EnvBuildFolder
 	stage('UnStashing Build Folder') 
 	{
         dir(path: "${stashbuildfolder}")
@@ -36,7 +36,7 @@ node(env.label)
 	}
 	stage('Get Env properties And Deploy the Build')
 	{
-	echo env.BuildFolder1
+	echo env.EnvBuildFolder
     echo "${env.EnvConfig}"
     echo "${env.WARDeployscript}"
     
@@ -69,10 +69,12 @@ node(env.label)
 	   {
          RevisionMethods = load("ProcessRevisionFile.groovy")
 	   }
-	    def buildname =	RevisionMethods.readRevisionFile("${RevisionFile}","${EnvConfig}")
+	  /*  def buildname =	RevisionMethods.readRevisionFile("${RevisionFile}","${EnvConfig}")
         echo "${buildname}"
         def intrmBuildFolder="${buildname}".substring(0,"${buildname}".lastIndexOf(","))
-        def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)
+        def BuildFolder ="${intrmBuildFolder}".substring("${intrmBuildFolder}".lastIndexOf(",")+1)*/
+		
+	def  BuildFolder=env.EnvBuildFolder
 	   
 	    RevisionMethods.parseRevisionFile(RevisionFile,EnvConfig,BuildFolder,"F")
 	}
