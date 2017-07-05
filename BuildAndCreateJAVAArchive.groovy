@@ -8,7 +8,8 @@ node(env.label){
 	echo "Running Maven"
 		echo "currentpath:${pwd()}"
     dir(path: env.Subdirectory) {
-    sh ('#!/bin/sh -e\n'+ "/opt/oracle/middleware/oracle_common/modules/org.apache.maven_3.2.5/bin/mvn package")		
+  //  sh ('#!/bin/sh -e\n'+ "/opt/oracle/middleware/oracle_common/modules/org.apache.maven_3.2.5/bin/mvn package")	
+	     sh ('#!/bin/sh -e\n'+ "/opt/jenkins/agent/scm/scripts/WarDeployment.sh"+" "+path+" "+env.buildlocation)
 	}
 	}
 	}
