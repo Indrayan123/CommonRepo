@@ -6,7 +6,7 @@ node(env.label){
     stage('JAVA WAR Creation') {
 	script{
 	echo "Running Maven"
-		echo "${pwd}"
+		echo "currentpath:${pwd()}"
     dir(path: env.Subdirectory) {
     sh ('#!/bin/sh -e\n'+ "/opt/oracle/middleware/oracle_common/modules/org.apache.maven_3.2.5/bin/mvn package")		
 	}
