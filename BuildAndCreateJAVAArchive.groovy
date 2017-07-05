@@ -6,12 +6,13 @@ node(env.label){
     stage('JAVA WAR Creation') {
 	script{
 	echo "Running Maven"
+		buildloc =env.buildlocation
 		echo "currentpath:${pwd()}"
-		echo "buildlocation:${env.buildlocation}"
+		echo "buildlocation:${buildloc}"
     dir(path: env.Subdirectory) {
   //  sh ('#!/bin/sh -e\n'+ "/opt/oracle/middleware/oracle_common/modules/org.apache.maven_3.2.5/bin/mvn package")
 	    echo "path:${pwd()}"
-	    sh ('#!/bin/sh -e\n'+ "/opt/jenkins/agent/scm/scripts/WarDeployment.sh"+" "+pwd()+" "+${env.buildlocation})
+	    sh ('#!/bin/sh -e\n'+ "/opt/jenkins/agent/scm/scripts/WarDeployment.sh"+" "+pwd()+" "+"${env.buildlocation}")
 	}
 	}
 	}
