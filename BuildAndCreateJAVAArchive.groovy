@@ -5,7 +5,8 @@ node(env.label){
     }       
     stage('JAVA WAR Creation') {
 	script{
-	echo "Running Maven"	 
+	echo "Running Maven"
+		echo "${pwd}"
     dir(path: env.Subdirectory) {
     sh ('#!/bin/sh -e\n'+ "/opt/oracle/middleware/oracle_common/modules/org.apache.maven_3.2.5/bin/mvn package")		
 	}
@@ -25,9 +26,9 @@ node('master'){
     }
 }
 }
-node(env.label){
+/*node(env.label){
 stage('Clean Directory') {
 		 echo "Cleaning Directory: ${pwd()}"
          sh ("rm -rf *")
     }
-}
+}*/
