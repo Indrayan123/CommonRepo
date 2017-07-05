@@ -7,7 +7,7 @@ node(env.label){
 	script{
 	echo "Running Maven"
 		//buildloc =env.buildlocation
-		buildloc = "../Builds/"+"R1_"+env.BUILD_TIMESTAMP+env.BUILD_ID
+		buildloc = "../Builds/"+"R1_"+env.BUILD_TIMESTAMP+"_"+env.BUILD_ID
 		echo "currentpath:${pwd()}"
 		echo "buildlocation:${buildloc}"
     dir(path: env.Subdirectory) {
