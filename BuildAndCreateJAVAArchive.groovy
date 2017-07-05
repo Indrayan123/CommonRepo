@@ -10,8 +10,8 @@ node(env.label){
 		echo "buildlocation:${env.buildlocation}"
     dir(path: env.Subdirectory) {
   //  sh ('#!/bin/sh -e\n'+ "/opt/oracle/middleware/oracle_common/modules/org.apache.maven_3.2.5/bin/mvn package")
-	    echo "path:${path}"
-	     sh ('#!/bin/sh -e\n'+ "/opt/jenkins/agent/scm/scripts/WarDeployment.sh"+" "+path+" "+env.buildlocation)
+	    echo "path:${pwd()}"
+	    sh ('#!/bin/sh -e\n'+ "/opt/jenkins/agent/scm/scripts/WarDeployment.sh"+" "+pwd()+" "+${env.buildlocation})
 	}
 	}
 	}
