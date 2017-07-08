@@ -8,14 +8,8 @@ node('master')
 	}
         
     def file12=env.MasterDeploymentDetailsLocation+File.separator+"Revision.txt"
-     echo "${file12}"
-    if (fileExists("${file12}")) 
-		{
-		echo 'File Exists'
-		} else
-		{
-		echo 'File Does not Exists'
-		}
+     
+    
 		
 	RevisionMethods.parseRevisionFile(file12,EnvConfig,BuildFolder,"P")    
 }
