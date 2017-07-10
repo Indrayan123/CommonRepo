@@ -13,7 +13,7 @@ node(env.label){
     dir(path: env.Subdirectory) {
   //  sh ('#!/bin/sh -e\n'+ "/opt/oracle/middleware/oracle_common/modules/org.apache.maven_3.2.5/bin/mvn package")
 	    echo "path:${pwd()}"
-	    sh ('#!/bin/sh -e\n'+ "/opt/jenkins/agent/scm/scripts/WarDeployment.sh"+" "+pwd()+" "+"${buildloc}")
+	    sh ('#!/bin/sh -e\n'+ "/opt/jenkins/agent/scm/scripts/WarCompilation.sh"+" "+pwd()+" "+"${buildloc}")
 	}
 	}
 	}
