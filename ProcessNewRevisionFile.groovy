@@ -13,7 +13,7 @@ In case file is non-existant, it will create the Revision.txt first . Then it wi
 Revision.txt entry format: $Env, $BuildNo, $StatusFlag (e.g. DEV,R1_2017-06-23-5,P)
 *********/
 @NonCPS
-def parseRevisionFile(String fName,String env,String buildTag,String Status) 
+def parseRevisionFile(String fName,String buildTag,String env,String Last_Deploy_Timestamp,String Status,String Tag_Comment) 
 {
     ArrayList fileContent = null  										  // Declare ArrayList to read Revision.txt
     PrintWriter writer = null     						                  // Declare File Write
@@ -27,12 +27,12 @@ def parseRevisionFile(String fName,String env,String buildTag,String Status)
 		i = fileContent.iterator()						                  // Initialize iterator for updated Arraylist
 		while (i.hasNext()) 						                      // Iterate through ArrayList
 		{
-			if (i.next().toUpperCase().contains("${env}"))                // Check if any existing entry for provided Env in ArrayList
+			if (i.next().toUpperCase().contains("${buildTag}"))                // Check if any existing entry for provided Env in ArrayList
 			{
 				i.remove()						                          // In case entry exist, delete the same
 			}
 		}
-		fileContent.add(0,"${env}"+","+"${buildTag}"+","+"${Status}")	  // Add a fresh entry in Arraylist with Env, BuildNo details & Status as P(Pending)
+		fileContent.add(0,"${buildTag}"+","+"${env}"+","+"${Last_Deploy_Timestamp}"+","+"${Status}"+","+"${Tag_Comment}") // Add a fresh entry in Arraylist with Env, BuildNo details & Status as P(Pending)
 		println fileContent
 		writer = new PrintWriter(f)						                  // Initialize File Write
 
@@ -51,7 +51,7 @@ def parseRevisionFile(String fName,String env,String buildTag,String Status)
 		boolean bool = f.createNewFile();				            	  // Create Revision.txt file( if required)
         f.setExecutable(true, false);						              // Set permission of File
 		fileContent = new ArrayList()					            	  // Initialize Arralist
-		fileContent.add(0,"${env}"+","+"${buildTag}"+","+"${Status}")     // Add a fresh entry in Arraylist with Env, BuildNo details & Status as P(Pending)
+		fileContent.add(0,"${buildTag}"+","+"${env}"+","+"${Last_Deploy_Timestamp}"+","+"${Status}"+","+"${Tag_Comment}")    // Add a fresh entry in Arraylist with Env, BuildNo details & Status as P(Pending)
 		writer = new PrintWriter(f)										  // Initialize File Write
 		fileContent.each 	{ id -> writer.println(id) }            	  // Write the updated content( with selected Build No & Env) in Revision.txt
 		writer.close()									            	  // Close file Writer
