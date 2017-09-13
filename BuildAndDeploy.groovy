@@ -26,9 +26,9 @@ node('master')
 	def projectpath=env.JOB_NAME
 	def masterprojectpath=projectpath.replaceAll("/","\\\\")
 	
-	env.Unstash_SlaveBuildPath=env.slave_workspace+"/"+projectpath+"/Builds"+env.Build_ID
+	env.Unstash_SlaveBuildPath=env.slave_workspace+"/"+projectpath+"/Builds/"+env.Build_ID
 //	env.UnstashSlaveBuildPath="/export/home/f23963/jar/R1_2017-09-07_1"
-	env.Stash_MasterBuildPath=env.master_workSpace+"\\"+masterprojectpath+"\\Builds"+env.Build_ID
+	env.Stash_MasterBuildPath=env.master_workSpace+"\\"+masterprojectpath+"\\Builds\\"+env.Build_ID
     
 }
 	
