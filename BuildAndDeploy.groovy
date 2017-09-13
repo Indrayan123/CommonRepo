@@ -1,12 +1,8 @@
-node('DEV')
+node(env.ENV_Name)
 {
     stage('Getting Environment Urls')
-    {
-         
-     
-	
-	env.soapass = env.SOASERVER_PASSWORD  
-	
+	{
+	env.soapass = env.SOASERVER_PASSWORD
 	env.soauser = env.SOASERVER_USERNAME
 	env.soaurl=env.SOASERVER_URL
 	
@@ -41,7 +37,7 @@ node('master')
     
 }
 
-node('DEV')
+node(env.ENV_Name)
 {
     echo "connecting to the deployment environment"
     stage ('Unstash Build')
