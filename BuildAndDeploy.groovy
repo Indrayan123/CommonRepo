@@ -1,9 +1,9 @@
 node(env.ENV_Name)
 {
-	
+	echo "slaveworkspace:${pwd()}"
     stage('Getting Environment Urls')
 	{
-		echo "slaveworkspace:${pwd()}"
+		
 	env.soapass = env.SOASERVER_PASSWORD
 	env.soauser = env.SOASERVER_USERNAME
 	env.soaurl=env.SOASERVER_URL
@@ -19,10 +19,11 @@ node(env.ENV_Name)
 node('master')
 
 {
+	echo "masterworkspace:${pwd()}"
 	
     stage ('Getting initial values')
 {
-	echo "masterworkspace:${pwd()}
+	
 	env.UnstashSlaveBuildPath=env.SlaveBuildPath+env.Build_ID
 //	env.UnstashSlaveBuildPath="/export/home/f23963/jar/R1_2017-09-07_1"
 	env.Master_stashpath=env.Master_BUILD_PATH+"\\"+env.Build_ID
