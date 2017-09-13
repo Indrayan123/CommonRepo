@@ -22,20 +22,20 @@ node('master')
 	
     stage ('Setting Stash And Unsatsh Path')
 {
-	//Getting the projetcpath name from enviroment
-	def projectpath=env.env.JOB_NAME
+	//Getting the projectpath name from environment
+	def projectpath=env.JOB_NAME
+	def masterprojectpath=projectpath.replaceAll("/","\\\\")
 	
-	
-	env.UnstashSlaveBuildPath=env.SlaveBuildPath+env.Build_ID
+	env.Unstash_SlaveBuildPath=env.slave_workspace+"/"+projectpath+"/Builds"+env.Build_ID
 //	env.UnstashSlaveBuildPath="/export/home/f23963/jar/R1_2017-09-07_1"
-	env.Master_stashpath=env.Master_BUILD_PATH+"\\"+env.Build_ID
+	env.Stash_MasterBuildPath=env.master_workSpace+"\\"+masterprojectpath+"\\Builds"+env.Build_ID
     
 }
 	
     stage('Stashing Build in Master')
     {
         
-		dir(path: "${env.Master_stashpath}") 
+		dir(path: "${env.Stash_MasterBuildPath}") 
 		{
 		    echo "path:${pwd()}"
 		stash includes: '**', name: 'BuildResources'
@@ -50,8 +50,8 @@ node(env.ENV_Name)
     echo "connecting to the deployment environment"
     stage ('Unstash Build')
     {
-      echo "slavebuildpath:${env.SlaveBuildPath}"
-       dir(path: "${env.UnstashSlaveBuildPath}") 
+     
+       dir(path: "${env.Unstash_SlaveBuildPath}") 
        {
           echo "unstash path:${pwd()}"
  		unstash 'BuildResources'}  
@@ -62,7 +62,7 @@ node(env.ENV_Name)
     stage ('Compile And Deploy To The Environment')
     {
         echo "compile path:${pwd()}"
-        pomLoc=env.UnstashSlaveBuildPath+"/SOAAppDeployment"
+        pomLoc=env.Unstash_SlaveBuildPath+"/SOAAppDeployment"
         pomLoc='/opt/jenkins/agent/workspace/SOA12cDeployment/BuildAndDeploy/Builds/R1_2017-09-07_9/SOAAppDeployment'
         dir(path:"${pomLoc}")
         {
