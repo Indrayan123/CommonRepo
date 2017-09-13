@@ -24,11 +24,11 @@ node('master')
 {
 	//Getting the projectpath name from environment
 	def projectpath=env.JOB_NAME
-	def masterprojectpath=projectpath.replaceAll("/","\\\\")
+	env.masterprojectpath=projectpath.replaceAll("/","\\\\")
 	
 	env.Unstash_SlaveBuildPath=env.slave_workspace+"/"+projectpath+"/Builds/"+env.Build_ID
-//	env.UnstashSlaveBuildPath="/export/home/f23963/jar/R1_2017-09-07_1"
-	env.Stash_MasterBuildPath=env.master_workSpace+"\\"+masterprojectpath+"\\Builds\\"+env.Build_ID
+	env.Stash_MasterBuildPath=env.Master_Build_Path+"\\"+env.Build_ID
+	env.RevisionPath=env.master_workSpace+"\\"+env.masterprojectpath+"\\Revision"
     
 }
 	
@@ -63,7 +63,6 @@ node(env.ENV_Name)
     {
         echo "compile path:${pwd()}"
         pomLoc=env.Unstash_SlaveBuildPath+"/SOAAppDeployment"
-        pomLoc='/opt/jenkins/agent/workspace/SOA12cDeployment/BuildAndDeploy/Builds/R1_2017-09-07_9/SOAAppDeployment'
         dir(path:"${pomLoc}")
         {
             env.scriptOp =sh ('#!/bin/sh -e\n'+ "/opt/oracle/middleware/oracle_common/modules/org.apache.maven_3.2.5/bin/mvn pre-integration-test -Dsoapassword=${env.soapass} -DserverURL=${env.soaurl} -Duser=${env.soauser}")
@@ -80,11 +79,11 @@ node(env.ENV_Name)
     {
     def RevisionMethods = ""
     
-	    git 'https://github.com/Indrayan123/CommonRepo'
+	    git env.Git_Groovy_CommonLocation
          RevisionMethods = load("ProcessNewRevisionFile.groovy")
 
         
-    def revisionfile=env.RevisionFilepath+File.separator+"Revision.txt"
+    def revisionfile=env.RevisionPath+File.separator+"Revision.txt"
      
     
 		
@@ -97,7 +96,6 @@ node(env.ENV_Name)
 catch (e)
 {
     echo "${e}"
-  echo "script o/p:${env.scriptOp}"
   echo "wrting failed status"
   node('master')
 {
@@ -105,15 +103,15 @@ catch (e)
     {
     def RevisionMethods = ""
     
-	    git 'https://github.com/Indrayan123/CommonRepo'
+	    git env.Git_Groovy_CommonLocation
          RevisionMethods = load("ProcessNewRevisionFile.groovy")
 
         
-    def revisionfile=env.RevisionFilepath+File.separator+"Revision.txt"
+    def revisionfile=env.RevisionPath+File.separator+"Revision.txt"
      
     
 		
-	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'Deployed','Failed')
+	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'NotDeployed','Failed')
     }
     
 }
