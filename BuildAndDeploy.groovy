@@ -69,7 +69,7 @@ node(env.ENV_Name)
         pomLoc=env.Unstash_SlaveBuildPath+"/SOAAppDeployment"
         dir(path:"${pomLoc}")
         {
-            env.scriptOp =sh ('#!/bin/sh -e\n'+ "/opt/oracle/middleware/oracle_common/modules/org.apache.maven_3.2.5/bin/mvn pre-integration-test -Dsoapassword=${env.soapass} -DserverURL=${env.soaurl} -Duser=${env.soauser}")
+            env.scriptOp =sh ('#!/bin/sh -e\n'+ "/opt/oracle/middleware/oracle_common/modules/org.apache.maven_3.2.5/bin/mvn -e pre-integration-test -Dsoapassword=${env.soapass} -DserverURL=${env.soaurl} -Duser=${env.soauser}")
         }
         
         echo "script o/p:${env.scriptOp}"
