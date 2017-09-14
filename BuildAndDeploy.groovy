@@ -96,14 +96,15 @@ node(env.ENV_Name)
     }
 	stage('Clean Directory')
 	{
-	dir(env.masterprojpath){
+	dir(env.masterprojpath)
+	{
          echo "Cleaning Directory: ${pwd()}"
          sh ("rm -rf *.groovy")
     }
+	}
     
 }
 }
-
 catch (e)
 {
     echo "${e}"
@@ -124,13 +125,14 @@ catch (e)
 		
 	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'NotDeployed','Failed')
     }
-	stage('Clean Directory')
+    
+    stage('Clean Directory')
 	{
-	dir(env.masterprojpath){
+	dir(env.masterprojpath)
+	{
          echo "Cleaning Directory: ${pwd()}"
          sh ("rm -rf *.groovy")
     }
-	
 	}
     
 }
