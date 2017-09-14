@@ -24,11 +24,15 @@ node('master')
 {
 	//Getting the projectpath name from environment
 	def projectpath=env.JOB_NAME
+	echo "projectpath:${projectpath}"
 	env.masterprojectpath=projectpath.replaceAll("/","\\\\")
 	
 	env.Unstash_SlaveBuildPath=env.slave_workspace+"/"+projectpath+"/Builds/"+env.Build_ID
+	echo "unstashpath:${env.Unstash_SlaveBuildPath}"
 	env.Stash_MasterBuildPath=env.Master_Build_Path+"\\"+env.Build_ID
+	echo "stashpath:${env.Stash_MasterBuildPath}"
 	env.RevisionPath=env.master_workSpace+"\\"+env.masterprojectpath+"\\Revision"
+	echo "revisionpath:${env.RevisionPath}"
     
 }
 	
