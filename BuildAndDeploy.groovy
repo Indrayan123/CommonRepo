@@ -33,6 +33,7 @@ node('master')
 	echo "stashpath:${env.Stash_MasterBuildPath}"
 	env.RevisionPath=env.master_workSpace+"\\"+env.masterprojectpath+"\\Revision"
 	echo "revisionpath:${env.RevisionPath}"
+	env.masterprojpath=env.master_workSpace+"\\"+env.masterprojectpath
     
 }
 	
@@ -93,6 +94,12 @@ node(env.ENV_Name)
 		
 	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'Deployed','true')
     }
+	stage('Clean Directory')
+	{
+	dir(env.masterprojpath){
+         echo "Cleaning Directory: ${pwd()}"
+         sh ("rm -rf *.groovy")
+    }
     
 }
 }
@@ -117,6 +124,14 @@ catch (e)
 		
 	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'NotDeployed','Failed')
     }
+	stage('Clean Directory')
+	{
+	dir(env.masterprojpath){
+         echo "Cleaning Directory: ${pwd()}"
+         sh ("rm -rf *.groovy")
+    }
+	
+	}
     
 }
 }
