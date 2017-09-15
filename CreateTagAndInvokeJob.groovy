@@ -37,17 +37,11 @@ stage('Clean Directory') {
         }
     }
     
-     stage('Invoke BuidAndDeploy')
-     
-     {
-         def tag = env.tagName
-		 echo "TagName: ${tag}"
-		def buildparams="Build_ID=${tag}&ENV_Name=SOA_Dev"
-		sh "curl -X POST 'http://6ztmqg2:8080/job/SOA12cDeployment/job/BuildAndDeploy/buildWithParameters'\
-  -H 'Jenkins-Crumb:34219f9e475949d2807e127be956f051'\
-   --user 'admin:34219f9e475949d2807e127be956f051'\
-   --data  '${buildparams}'"
-      
-     }
+     stage('Invoke Build&Deploy')
+    {
+        def tag=env.tagName
+        build job: 'BuildAndDeploy', parameters: [string(name: 'Build_ID', value: "${tag}"), string(name: 'ENV_Name', value: 'SOA_Dev'), [$class: 'ExtendedChoiceParameterValue', name: 'Deployment_History', value: '']]
+    }
+
 
 }
