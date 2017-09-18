@@ -16,7 +16,7 @@ node(env.ENV_Name)
 
 
 
-node('master')
+/*node('master')
 
 {
 	
@@ -136,7 +136,7 @@ catch (e)
 }
 }
     
-}
+}*/
 
 /*node('master')
 {
