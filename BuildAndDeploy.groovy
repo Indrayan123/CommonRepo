@@ -82,7 +82,7 @@ node(env.ENV_Name)
     {
     def RevisionMethods = ""
     
-	    git env.Git_Groovy_CommonLocation/ProcessNewRevisionFile.groovy
+	    git env.Git_Groovy_CommonLocation
 	    
          RevisionMethods = load("ProcessNewRevisionFile.groovy")
 
@@ -114,7 +114,7 @@ catch (e)
     {
     def RevisionMethods = ""
     
-	   // git env.Git_Groovy_CommonLocation
+	    git env.Git_Groovy_CommonLocation
          RevisionMethods = load("ProcessNewRevisionFile.groovy")
 
         
