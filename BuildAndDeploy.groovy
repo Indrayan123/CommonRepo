@@ -6,7 +6,7 @@ node(env.ENV_Name)
 	env.soapass = env.SOASERVER_PASSWORD
 	env.soauser = env.SOASERVER_USERNAME
 	env.soaurl=env.SOASERVER_URL
-	env.master_workSpace=env.Master_WorkSpace
+	env.master_workSpace=env.WORKSPACE_LOCATION
 	env.slave_workspace=env.Slave_WorkSpace
         
     }
@@ -29,11 +29,11 @@ node('master')
 	
 	env.Unstash_SlaveBuildPath=env.slave_workspace+"/"+projectpath+"/Builds/"+env.Build_ID
 	echo "unstashpath:${env.Unstash_SlaveBuildPath}"
-	env.Stash_MasterBuildPath=env.Master_Build_Path+"\\"+env.Build_ID
+	env.Stash_MasterBuildPath=env.Master_Build_Path+File.separator+env.Build_ID
 	echo "stashpath:${env.Stash_MasterBuildPath}"
-	env.RevisionPath=env.master_workSpace+"\\"+env.masterprojectpath+"\\Revision"
+	env.RevisionPath=env.master_workSpace+File.separator+env.masterprojectpath+File.separator+"Revision"
 	echo "revisionpath:${env.RevisionPath}"
-	env.masterprojpath=env.master_workSpace+"\\"+env.masterprojectpath
+	env.masterprojworkspacepath=env.master_workSpace+File.separator+env.masterprojectpath
     
 }
 	
@@ -73,8 +73,6 @@ node(env.ENV_Name)
             env.scriptOp =sh ('#!/bin/sh -e\n'+ "/opt/oracle/middleware/oracle_common/modules/org.apache.maven_3.2.5/bin/mvn  pre-integration-test -Dsoapassword=${env.soapass} -DserverURL=${env.soaurl} -Duser=${env.soauser}")
         }
         
-        echo "script o/p:${env.scriptOp}"
-        
         
     }
     echo "writing success status in revision file"
@@ -96,7 +94,7 @@ node(env.ENV_Name)
     }
 	stage('Clean Directory')
 	{
-	dir(env.masterprojpath)
+	dir(env.masterprojworkspacepath)
 	{
          echo "Cleaning Directory: ${pwd()}"
          sh ("rm -rf *.groovy")
@@ -128,7 +126,7 @@ catch (e)
     
     stage('Clean Directory')
 	{
-	dir(env.masterprojpath)
+	dir(env.masterprojworkspacepath)
 	{
          echo "Cleaning Directory: ${pwd()}"
          sh ("rm -rf *.groovy")
