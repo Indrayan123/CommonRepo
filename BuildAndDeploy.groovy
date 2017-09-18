@@ -16,7 +16,7 @@ node(env.ENV_Name)
 
 
 
-/*node('master')
+node('master')
 
 {
 	
@@ -82,7 +82,7 @@ node(env.ENV_Name)
     {
     def RevisionMethods = ""
     
-	    git env.Git_Groovy_CommonLocation
+	  //  git env.Git_Groovy_CommonLocation
          RevisionMethods = load("ProcessNewRevisionFile.groovy")
 
         
@@ -113,7 +113,7 @@ catch (e)
     {
     def RevisionMethods = ""
     
-	    git env.Git_Groovy_CommonLocation
+	   // git env.Git_Groovy_CommonLocation
          RevisionMethods = load("ProcessNewRevisionFile.groovy")
 
         
@@ -136,7 +136,7 @@ catch (e)
 }
 }
     
-}*/
+}
 
 /*node('master')
 {
