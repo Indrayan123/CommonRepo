@@ -65,3 +65,47 @@ def parseRevisionFile(String fName,String buildTag,String env,String Last_Deploy
 	return "Entry made in Revision.txt"
 }
 
+/*********
+readRevisionFile
+Signature: 
+fName	=> The absolute Path of Project specific 
+env 	=> The env(DEV,SYS,UAT,PRD etc) where the application needs to be deployed
+Purpose:
+This methods first checks the existence of Project specific Revision.txt file.
+In case file exists, it will check for any env(passed as argument) specific entry in the file, if so will it will return the entry.
+if entry not found, same will be returned back to caller.
+In case file is non-existant, it will create the Revision.txt first it will return same msg to caller process.
+Revision.txt entry format: $Env, $BuildNo, $StatusFlag (e.g. DEV,R1_2017-06-23-5,P)
+*********/
+@NonCPS
+def readRevisionFile(String fName,String env) 
+{
+    ArrayList fileContent = null  										  // Declare ArrayList to read Revision.txt
+    PrintWriter writer = null     						                  // Declare File Write
+    File f=new File("${fName}")   						                  // Instantiate Application specific Revision file
+//	println "${env}"
+//	println "${fName}"
+	def j=0
+	if (f.length() > 0)
+	{
+		fileContent = new ArrayList()					                  // Initialize Array list
+		f.eachLine {  line ->fileContent.add(line) }	                  // Read each line of Revision.txt & populate in Array list
+		i = fileContent.iterator()						                  // Initialize iterator for updated Array list
+		while (i.hasNext()) 						                      // Iterate through ArrayList
+		{
+		    
+			def lineContent=i.next().toUpperCase()			              // Define variable lineContent to read each line
+		    //	println "${lineContent}"			                      
+			if (lineContent.contains("${env}")) 			              // Check if env (passed as argument) specific entry exist or not in File
+			{	j=1;
+			 return lineContent}			                     		  // In case entry found, return the file line content
+		}
+		if(j==0)
+		return "Error:No entry found corresponding to env: ${env}" 		      // In case entry not found 
+	}
+	else{
+		println "File does not exists"
+		return "Error:File does not exists" 								      // In case no entry found, return accordingly
+	}
+}
+return this
