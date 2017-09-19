@@ -31,7 +31,7 @@ def parseRevisionFile(String fName,String buildTag,String env,String Last_Deploy
 			String eachline=i.next()
 			println "eachline"+":"+eachline
 			RevDetails = eachline.split(",")
-			if ((eachline.toUpperCase().contains("${buildTag}"))&&(eachline.toUpperCase().contains("${env}")))                // Check if any existing entry for provided Env in ArrayList
+			if ((eachline.toUpperCase().contains("${buildTag}"))&&(eachline.contains("${env}")))                // Check if any existing entry for provided Env in ArrayList
 			{
 				println "inside if"
 				Tag_Comment=RevDetails[4]
