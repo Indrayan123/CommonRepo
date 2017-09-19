@@ -27,7 +27,8 @@ def parseRevisionFile(String fName,String buildTag,String env,String Last_Deploy
 		i = fileContent.iterator()						                  // Initialize iterator for updated Arraylist
 		while (i.hasNext()) 						                      // Iterate through ArrayList
 		{
-			if (i.next().toUpperCase().contains("${buildTag}"))                // Check if any existing entry for provided Env in ArrayList
+			String eachline=i.next()
+			if ((eachline.toUpperCase().contains("${buildTag}"))&&(eachline.toUpperCase().contains("${env}")))                // Check if any existing entry for provided Env in ArrayList
 			{
 				i.remove()						                          // In case entry exist, delete the same
 			}
