@@ -24,12 +24,15 @@ def parseRevisionFile(String fName,String buildTag,String env,String Last_Deploy
 		println "File exists"
 		fileContent = new ArrayList()					                  // Initialize Arralist
 		f.eachLine {  line ->fileContent.add(line) }	                  // Read eachline of Revision.txt & populate in Arralist
-		i = fileContent.iterator()						                  // Initialize iterator for updated Arraylist
+		i = fileContent.iterator()						// Initialize iterator for updated Arraylist
+		String[] RevDetails = null
 		while (i.hasNext()) 						                      // Iterate through ArrayList
 		{
 			String eachline=i.next()
+			RevDetails = eachline.split(",")
 			if ((eachline.toUpperCase().contains("${buildTag}"))&&(eachline.toUpperCase().contains("${env}")))                // Check if any existing entry for provided Env in ArrayList
 			{
+				Tag_Comment=RevDetails[4]
 				i.remove()						                          // In case entry exist, delete the same
 			}
 		}
