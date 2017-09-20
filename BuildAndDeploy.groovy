@@ -20,7 +20,7 @@ node('master')
 
 {
 	
-    stage ('Setting Stash And Unsatsh Path')
+    stage ('Setting Stash And Unstash Path')
 {
 	//Getting the projectpath name from environment
 	def projectpath=env.JOB_NAME
@@ -31,7 +31,8 @@ node('master')
 	echo "unstashpath:${env.Unstash_SlaveBuildPath}"
 	env.Stash_MasterBuildPath=env.Master_Build_Path+File.separator+env.Build_ID
 	echo "stashpath:${env.Stash_MasterBuildPath}"
-	env.RevisionPath=env.master_workSpace+File.separator+env.masterprojectpath+File.separator+"Revision"
+	//env.RevisionPath=env.master_workSpace+File.separator+env.masterprojectpath+File.separator+"Revision"
+	env.RevisionPath=env.master_workSpace+File.separator+env.masterprojectpath+File.separator+".."+File.separator+"Revision"
 	echo "revisionpath:${env.RevisionPath}"
 	env.masterprojworkspacepath=env.master_workSpace+File.separator+env.masterprojectpath
     
@@ -66,11 +67,11 @@ node(env.ENV_Name)
         
     stage ('Compile And Deploy To The Environment')
     {
-        echo "compile path:${pwd()}"
-        pomLoc=env.Unstash_SlaveBuildPath+"/SOAAppDeployment"
+        echo "compile path:${pwd()}"		
+        pomLoc=env.Unstash_SlaveBuildPath+"/"+env.ApplicationName
         dir(path:"${pomLoc}")
         {
-            env.scriptOp =sh ('#!/bin/sh -e\n'+ "/opt/oracle/middleware/oracle_common/modules/org.apache.maven_3.2.5/bin/mvn  pre-integration-test -Dsoapassword=${env.soapass} -DserverURL=${env.soaurl} -Duser=${env.soauser}")
+            env.scriptOp =sh ('#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn  pre-integration-test -Dsoapassword=${env.soapass} -DserverURL=${env.soaurl} -Duser=${env.soauser}")
         }
         
         
@@ -82,16 +83,16 @@ node(env.ENV_Name)
     {
     def RevisionMethods = ""
     
-	    git env.Git_Groovy_CommonLocation
-	    
+	    dir(path:"${env.masterprojworkspacepath}")
+	    {
          RevisionMethods = load("ProcessNewRevisionFile.groovy")
-
+	    }
         
     def revisionfile=env.RevisionPath+File.separator+"Revision.txt"
      
     
 		
-	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'Deployed','true')
+	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'Deployed','NA')
     }
 	stage('Clean Directory')
 	{
@@ -114,15 +115,16 @@ catch (e)
     {
     def RevisionMethods = ""
     
-	    git env.Git_Groovy_CommonLocation
+	    dir(path:"${env.masterprojworkspacepath}")
+	    {
          RevisionMethods = load("ProcessNewRevisionFile.groovy")
 
-        
+	    }
     def revisionfile=env.RevisionPath+File.separator+"Revision.txt"
      
     
 		
-	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'NotDeployed','Failed')
+	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'DeploymentFailed','NA')
     }
     
     stage('Clean Directory')
@@ -138,22 +140,3 @@ catch (e)
 }
     
 }
-
-/*node('master')
-{
-    stage('Write or prepend to Revision File')
-    {
-    def RevisionMethods = ""
-    
-	    git 'https://github.com/Indrayan123/CommonRepo'
-         RevisionMethods = load("ProcessNewRevisionFile.groovy")
-
-        
-    def revisionfile=env.RevisionFilepath+File.separator+"Revision.txt"
-     
-    
-		
-	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'Deployed','true')
-    }
-    
-}*/
