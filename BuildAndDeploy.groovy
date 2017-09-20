@@ -28,6 +28,7 @@ node('master')
 	env.masterprojectpath=projectpath.replaceAll("/","\\\\")
 	
 	env.Unstash_SlaveBuildPath=env.slave_workspace+"/"+projectpath+"/Builds/"+env.Build_ID
+	env.SlaveBuildPath=env.slave_workspace+"/"+projectpath+"/Builds"
 	echo "unstashpath:${env.Unstash_SlaveBuildPath}"
 	env.Stash_MasterBuildPath=env.Master_Build_Path+File.separator+env.Build_ID
 	echo "stashpath:${env.Stash_MasterBuildPath}"
@@ -35,6 +36,7 @@ node('master')
 	env.RevisionPath=env.master_workSpace+File.separator+env.masterprojectpath+File.separator+".."+File.separator+"Revision"
 	echo "revisionpath:${env.RevisionPath}"
 	env.masterprojworkspacepath=env.master_workSpace+File.separator+env.masterprojectpath
+	
     
 }
 	
@@ -76,6 +78,17 @@ node(env.ENV_Name)
         
         
     }
+		
+		stage('Cleaning the Slave Workspace')
+		{
+		 
+			dir(env.SlaveBuildPath)
+			{
+        			 echo "Cleaning Directory: ${pwd()}"
+				sh ("rm -rf ${env.Build_ID}")
+    			}
+		
+		}
     echo "writing success status in revision file"
     node('master')
 {
@@ -109,6 +122,19 @@ catch (e)
 {
     echo "${e}"
   echo "wrting failed status"
+	node(env.ENV_Name)
+	{
+	stage('Cleaning the Slave Workspace')
+		{
+		 
+			dir(env.SlaveBuildPath)
+			{
+        			 echo "Cleaning Directory: ${pwd()}"
+				sh ("rm -rf ${env.Build_ID}")
+    			}
+		
+		}
+	}
   node('master')
 {
     stage('Write or prepend to Revision File')
