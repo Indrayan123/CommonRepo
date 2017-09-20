@@ -31,11 +31,15 @@ def parseRevisionFile(String fName,String buildTag,String env,String Last_Deploy
 			String eachline=i.next()
 			println "eachline"+":"+eachline
 			RevDetails = eachline.split(",")
-			if ((eachline.toUpperCase().contains("${buildTag}"))&&(eachline.contains("${env}")))                // Check if any existing entry for provided Env in ArrayList
+			if (eachline.toUpperCase().contains("${buildTag}"))                // Check if any existing entry for provided Env in ArrayList
 			{
+				Tag_Comment=RevDetails[4] 
+				if(eachline.contains("${env}"))
+				{
 				println "inside if"
-				Tag_Comment=RevDetails[4]
-				i.remove()						                          // In case entry exist, delete the same
+				i.remove()
+				}
+				                            // In case entry exist, delete the same
 			}
 		}
 		fileContent.add(0,"${buildTag}"+","+"${env}"+","+"${Last_Deploy_Timestamp}"+","+"${Status}"+","+"${Tag_Comment}") // Add a fresh entry in Arraylist with Env, BuildNo details & Status as P(Pending)
