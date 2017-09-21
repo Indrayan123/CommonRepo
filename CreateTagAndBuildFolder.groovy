@@ -9,7 +9,7 @@ stage('Clean Directory') {
     
      } 
     stage('Checking Out Github source code') { 
-        git credentialsId: "${GitHubCrdToken}", url: "${env.ProjectGitHub_Location}"
+        git credentialsId: "${env.GitHubCrdToken}", url: "${env.ProjectGitHub_Location}"
     }
     stage('Creating Tag Folder in Git') { 
     env.tagName ='R1'+'_'+env.BUILD_TIMESTAMP+'_'+env.BUILD_ID
@@ -19,7 +19,7 @@ stage('Clean Directory') {
     env.unstashpath=env.BUILD_LOCATION+env.tagName+File.separator+env.ApplicationName
 	env.GitHubConnectionURL=env.ProjectGitHub_Location.replaceAll("https://","")
     
-    withCredentials([usernamePassword(credentialsId: "${GitHubCrdToken}", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+    withCredentials([usernamePassword(credentialsId: "${env.GitHubCrdToken}", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
     sh("git tag -a ${env.tagName} -m 'Tag Created for Build Id: ${env.BUILD_ID}'")
 	
     
