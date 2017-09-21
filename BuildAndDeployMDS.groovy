@@ -74,14 +74,14 @@ node(env.ENV_Name)
         dir(path:"${pomLoc}")
         {
             def scriptOp = sh(script: '#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn package", returnStatus: true)
-			//def scriptDtlOp = sh(script: '#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn org.apache.maven.plugins:maven-antrun-plugin:run", returnStdout: true).split("\r?\n")
-		def scriptAntOp = sh(script: '#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn org.apache.maven.plugins:maven-antrun-plugin:run", returnStatus: true)
-			/* if ("${scriptDtlOp}".contains('FAILED')) {  	 																		             	    
-			env.Status = "Failure"			
+	  def scriptDtlOp = sh(script: '#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn org.apache.maven.plugins:maven-antrun-plugin:run", returnStdout: true).split("\r?\n")
+		
+			 if ("${scriptDtlOp}".contains('FAILED')) {  	 																		             	    
+			env.Status = "DeploymentFailed"			
 		} else {
-			env.Status = "Success"  																		           
-		}*/
-		echo "Deploy Details: ${scriptAntOp}"
+			env.Status = "Deployed"  																		           
+		}
+		
         }
         
         
@@ -113,7 +113,7 @@ node(env.ENV_Name)
      
     
 		
-	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'Deployed','NA')
+	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,env.Status,'NA')
     }
 	stage('Clean Directory')
 	{
