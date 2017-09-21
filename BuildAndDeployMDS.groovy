@@ -75,13 +75,13 @@ node(env.ENV_Name)
         {
             def scriptOp = sh(script: '#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn package", returnStatus: true)
 			//def scriptDtlOp = sh(script: '#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn org.apache.maven.plugins:maven-antrun-plugin:run", returnStdout: true).split("\r?\n")
-		def scriptOp = sh(script: '#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn org.apache.maven.plugins:maven-antrun-plugin:run", returnStatus: true).split("\r?\n")
+		def scriptAntOp = sh(script: '#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn org.apache.maven.plugins:maven-antrun-plugin:run", returnStatus: true).split("\r?\n")
 			/* if ("${scriptDtlOp}".contains('FAILED')) {  	 																		             	    
 			env.Status = "Failure"			
 		} else {
 			env.Status = "Success"  																		           
 		}*/
-		echo "Deploy Details: ${scriptOp}"
+		echo "Deploy Details: ${scriptAntOp}"
         }
         
         
