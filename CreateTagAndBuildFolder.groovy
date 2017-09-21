@@ -53,10 +53,10 @@ stage('Clean Directory') {
         }
     }
     
-    stage('Refresh Master Artifacts')
+  /*  stage('Refresh Master Artifacts')
 {
     build 'RefreshArtifactsForParameterizedBuild'
-}    
+}   */ 
         
     stage('Invoke Build&Deploy')
     {
