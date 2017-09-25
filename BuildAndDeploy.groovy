@@ -73,7 +73,7 @@ node(env.ENV_Name)
         pomLoc=env.Unstash_SlaveBuildPath+"/"+env.ApplicationName
         dir(path:"${pomLoc}")
         {
-            env.scriptOp =sh ('#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn  pre-integration-test -Dmaven.ext.class.path='/opt/schneider/applications/SOAFoundation/lib/FndIntgSoaExtensions.jar' -Dsoapassword=${env.soapass} -DserverURL=${env.soaurl} -Duser=${env.soauser}")
+            env.scriptOp =sh ('#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn  pre-integration-test -Dsoapassword=${env.soapass} -DserverURL=${env.soaurl} -Duser=${env.soauser}")
         }
         
         
