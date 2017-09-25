@@ -79,7 +79,7 @@ node(env.ENV_Name)
         
     }
 		
-		stage('Cleaning the Slave Workspace')
+		/* stage('Cleaning the Slave Workspace')
 		{
 		 
 			dir(env.SlaveBuildPath)
@@ -88,7 +88,7 @@ node(env.ENV_Name)
 				sh ("rm -rf ${env.Build_ID}")
     			}
 		
-		}
+		} */
     echo "writing success status in revision file"
     node('master')
 {
