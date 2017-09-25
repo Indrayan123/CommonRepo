@@ -124,7 +124,7 @@ catch (e)
   echo "wrting failed status"
 	node(env.ENV_Name)
 	{
-	stage('Cleaning the Slave Workspace')
+	/* stage('Cleaning the Slave Workspace')
 		{
 		 
 			dir(env.SlaveBuildPath)
@@ -133,7 +133,7 @@ catch (e)
 				sh ("rm -rf ${env.Build_ID}")
     			}
 		
-		}
+		} */
 	}
   node('master')
 {
