@@ -73,7 +73,7 @@ node(env.ENV_Name)
         pomLoc=env.Unstash_SlaveBuildPath+"/"+env.ApplicationName
         dir(path:"${pomLoc}")
         {
-            env.scriptOp =sh ('#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn  -X pre-integration-test -Dsoapassword=${env.soapass} -DserverURL=${env.soaurl} -Duser=${env.soauser}")
+            env.scriptOp =sh ('#!/bin/sh -e\n'+ "${env.Maven_Path}/mvn package -Dsoapassword=${env.soapass} -DserverURL=${env.soaurl} -Duser=${env.soauser}")
         }
         
         
