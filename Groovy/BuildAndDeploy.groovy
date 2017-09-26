@@ -35,7 +35,7 @@ node('master')
 	//env.RevisionPath=env.master_workSpace+File.separator+env.masterprojectpath+File.separator+"Revision"
 	env.RevisionPath=env.master_workSpace+File.separator+env.masterprojectpath+File.separator+".."+File.separator+"Revision"
 	echo "revisionpath:${env.RevisionPath}"
-	env.masterprojworkspacepath=env.master_workSpace+File.separator+env.masterprojectpath
+	//env.masterprojworkspacepath=env.master_workSpace+File.separator+env.masterprojectpath
 	
     
 }
@@ -96,7 +96,7 @@ node(env.ENV_Name)
     {
     def RevisionMethods = ""
     
-	    dir(path:"${env.masterprojworkspacepath}")
+	    dir(path:"${env.CommonGroovy_Location}")
 	    {
          RevisionMethods = load("ProcessNewRevisionFile.groovy")
 	    }
@@ -107,14 +107,14 @@ node(env.ENV_Name)
 		
 	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'Deployed','NA')
     }
-	stage('Clean Directory')
+	/*stage('Clean Directory')
 	{
 	dir(env.masterprojworkspacepath)
 	{
          echo "Cleaning Directory: ${pwd()}"
          sh ("rm -rf *.groovy")
     }
-	}
+	}*/
     
 }
 }
@@ -141,7 +141,7 @@ catch (e)
     {
     def RevisionMethods = ""
     
-	    dir(path:"${env.masterprojworkspacepath}")
+	    dir(path:"${env.CommonGroovy_Location}")
 	    {
          RevisionMethods = load("ProcessNewRevisionFile.groovy")
 
@@ -153,14 +153,14 @@ catch (e)
 	RevisionMethods.parseRevisionFile(revisionfile,,env.BUILD_ID,env.ENV_Name,env.BUILD_TIMESTAMP,'DeploymentFailed','NA')
     }
     
-    stage('Clean Directory')
+  /*  stage('Clean Directory')
 	{
 	dir(env.masterprojworkspacepath)
 	{
          echo "Cleaning Directory: ${pwd()}"
          sh ("rm -rf *.groovy")
     }
-	}
+	}*/
     
 }
 }
